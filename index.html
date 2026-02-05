@@ -3,24 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FPS Game</title>
+    <title>JS FPS - Phase 1</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="crosshair"></div>
-    <div id="hud">
-        <div id="stats">
-            <div>Speed: <span id="speed">0</span></div>
-            <div>State: <span id="state">Standing</span></div>
-            <div>Position: <span id="position">0, 0, 0</span></div>
-        </div>
-        <div id="controls-info">
-            <p>WASD - Move | Shift - Sprint | Ctrl - Crouch | Space - Jump</p>
-            <p>Click to lock pointer and look around</p>
-        </div>
-    </div>
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="game.js" defer></script>
+    <div id="instructions">
+        <h1>FPS Prototype</h1>
+        <p>Click to Play</p>
+        <p>WASD to Move | SPACE to Jump</p>
+        <p>SHIFT to Sprint | C to Crouch</p>
+        <p>Jump against walls to Wall Jump</p>
+    </div>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <script type="module" src="script.js"></script>
 </body>
 </html>
