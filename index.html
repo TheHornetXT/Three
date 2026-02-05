@@ -3,17 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JS FPS - Phase 1</title>
+    <title>FPS Prototype - Phase 2</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     
-    <div id="instructions">
-        <h1>FPS Prototype</h1>
-        <p>Click to Play</p>
-        <p>WASD to Move | SPACE to Jump</p>
-        <p>SHIFT to Sprint | C to Crouch</p>
-        <p>Jump against walls to Wall Jump</p>
+    <div id="ui-layer">
+        <div id="fps-counter">FPS: 60</div>
+        <div id="crosshair">+</div>
     </div>
 
     <script type="importmap">
@@ -25,6 +22,6 @@
         }
     </script>
 
-    <script type="module" src="script.js"></script>
+    <script type="module" src="game.js"></script>
 </body>
 </html>
