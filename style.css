@@ -1,22 +1,40 @@
 body {
     margin: 0;
-    overflow: hidden; /* Hide scrollbars */
+    overflow: hidden;
     background-color: #000;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    user-select: none;
 }
 
-#instructions {
+#ui-layer {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.7);
+    pointer-events: none; /* Let clicks pass through to the canvas */
+}
+
+#fps-counter {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #00ff00;
+    font-weight: bold;
+    font-size: 18px;
+    background: rgba(0,0,0,0.5);
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+#crosshair {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     color: white;
-    cursor: pointer;
-    z-index: 10;
+    font-size: 24px;
+    font-weight: 200;
 }
 
 canvas {
