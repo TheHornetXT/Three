@@ -1,11 +1,10 @@
 // Game variables
 let scene, camera, renderer;
 let player, controls;
-let clock = new Clock();
+let clock;
 let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false;
 let canJump = false;
-let velocity = new THREE.Vector3();
-let direction = new THREE.Vector3();
+let velocity, direction;
 let isSprinting = false;
 let isCrouching = false;
 
@@ -19,35 +18,31 @@ const NORMAL_HEIGHT = 1.8;
 const CROUCH_HEIGHT = 0.9;
 
 // Collision detection
-let raycaster = new THREE.Raycaster();
+let raycaster;
 let collidableObjects = [];
-
-// Custom Clock class (since THREE.Clock might not be globally accessible)
-class Clock {
-    constructor() {
-        this.oldTime = performance.now();
-        this.elapsedTime = 0;
-    }
-    
-    getDelta() {
-        const newTime = performance.now();
-        const delta = (newTime - this.oldTime) / 1000;
-        this.oldTime = newTime;
-        this.elapsedTime += delta;
-        return delta;
-    }
-}
 
 // Initialize the game
 function init() {
+    console.log('Initializing game...');
+    
+    // Initialize Three.js objects
+    velocity = new THREE.Vector3();
+    direction = new THREE.Vector3();
+    raycaster = new THREE.Raycaster();
+    clock = new THREE.Clock();
+    
     // Create scene
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0x87CEEB);
     scene.fog = new THREE.Fog(0x87CEEB, 0, 100);
+    
+    console.log('Scene created');
 
     // Create camera
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, NORMAL_HEIGHT, 0);
+    camera.position.set(0, NORMAL_HEIGHT, 5);
+    
+    console.log('Camera created at position:', camera.position);
 
     // Create renderer
     renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -55,6 +50,8 @@ function init() {
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     document.body.appendChild(renderer.domElement);
+    
+    console.log('Renderer created and added to DOM');
 
     // Add lights
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
@@ -68,6 +65,8 @@ function init() {
     directionalLight.shadow.camera.top = 50;
     directionalLight.shadow.camera.bottom = -50;
     scene.add(directionalLight);
+    
+    console.log('Lights added');
 
     // Create ground
     const groundGeometry = new THREE.PlaneGeometry(100, 100);
@@ -79,9 +78,13 @@ function init() {
     ground.rotation.x = -Math.PI / 2;
     ground.receiveShadow = true;
     scene.add(ground);
+    
+    console.log('Ground created');
 
     // Create walls and obstacles for parkour
     createMap();
+    
+    console.log('Map created with', collidableObjects.length, 'collidable objects');
 
     // Setup controls
     setupControls();
@@ -91,6 +94,8 @@ function init() {
 
     // Handle window resize
     window.addEventListener('resize', onWindowResize, false);
+    
+    console.log('Game initialized successfully!');
 
     // Start animation loop
     animate();
@@ -361,5 +366,13 @@ function onWindowResize() {
     renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
-// Start the game
-init();
+// Start the game when page loads
+window.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded, checking for THREE.js...');
+    if (typeof THREE !== 'undefined') {
+        console.log('THREE.js loaded successfully');
+        init();
+    } else {
+        console.error('THREE.js failed to load!');
+    }
+});
